@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">post-comments</string>
+    <string name="add_new_post">Add new Post</string>
+    <string name="title_activity_post_form">PostFormActivity</string>
+    <string name="author">Author</string>
+    <string name="title">Title</string>
+    <string name="content">Content</string>
+    <string name="post">Submit</string>
+
+</resources>
