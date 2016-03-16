@@ -6,5 +6,6 @@
     <string name="title">Title</string>
     <string name="content">Content</string>
     <string name="post">Submit</string>
+    <string name="title_activity_comment_form">CommentFormActivity</string>
 
 </resources>

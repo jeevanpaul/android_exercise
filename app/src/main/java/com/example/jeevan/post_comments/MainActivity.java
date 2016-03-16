@@ -26,7 +26,8 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class MainActivity extends AppCompatActivity implements ListView.OnItemClickListener{
+public class MainActivity extends AppCompatActivity implements ListView.OnItemClickListener {
+
     ListView listView;
     public List<Post> posts;
 
@@ -34,55 +35,13 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         getPosts();
-        /*application.getApiService().getRecentPosts(new Callback<JsonObject>() {
-            @Override
-            public void success(JsonObject response_data_obj, Response arg1) {
-                handleData(response_data_obj);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Toast.makeText(getApplicationContext(), "Something went wrong, please try again later!", Toast.LENGTH_LONG).show();
-            }
-        });*/
-
-       /* String[] values = new String[]{"1st post"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values);
-        listView.setAdapter(adapter);*/
-
-        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int itemPosition = position;
-                String itemValue = (String) listView.getItemAtPosition(position);
-                //Toast.makeText(getApplicationContext(), "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG).show();
-                Intent intent=new Intent(MainActivity.this, PostViewActivity.class);
-                String message=itemValue;
-                intent.putExtra("EXTRA_MESSAGE", message);
-
-                startActivity(intent);
-
-            }
-        });*/
     }
 
     public void postForm(View view) {
         Intent intent = new Intent(this, PostFormActivity.class);
         startActivity(intent);
-
     }
-
-    /*public void handleData(JsonObject response_data_obj) {
-        if (jsonObject.get("status").getAsString().equals("SUCCESS")) {
-            posts = new Gson().fromJson(jsonObject.get("posts"), new TypeToken<List<Post>>() {
-            }.getType());
-            listView = (ListView) findViewById(R.id.list);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, posts);
-            listView.setAdapter(adapter);
-        }
-    }*/
 
     public void getPosts() {
         RestAdapter adapter = new RestAdapter.Builder().setEndpoint("http://192.168.1.25/android_backend").setLogLevel(RestAdapter.LogLevel.FULL).build();
@@ -106,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     }
 
     public void showList() {
-        ArrayAdapter<Post> adapter = new ArrayAdapter<Post>(this, android.R.layout.simple_list_item_1,posts);
+        ArrayAdapter<Post> adapter = new ArrayAdapter<Post>(this, android.R.layout.simple_list_item_1, posts);
         listView.setAdapter(adapter);
     }
 
@@ -120,10 +79,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         Post post = posts.get(position);
 
         //Adding book details to intent
-        intent.putExtra("content", post.content);
-        intent.putExtra("title",post.title);
-        intent.putExtra("author",post.author);
-
+        intent.putExtra("id", post.id);
         //Starting another activity to show post details
         startActivity(intent);
     }

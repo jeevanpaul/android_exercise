@@ -19,36 +19,36 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class PostFormActivity extends AppCompatActivity {
+public class CommentFormActivity extends AppCompatActivity {
     public String author;
     public String content;
-    public String title;
+    public int post_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_form);
+        setContentView(R.layout.activity_comment_form);
+        Intent intent = getIntent();
+        this.post_id = intent.getIntExtra("post_id", 0);
     }
-
     public void index(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, PostViewActivity.class);
 
-        EditText authortext = (EditText) findViewById(R.id.author);
+        EditText authortext = (EditText) findViewById(R.id.comment_author);
         this.author = authortext.getText().toString();
-        EditText titletext = (EditText) findViewById(R.id.title);
-        this.title = titletext.getText().toString();
-        EditText contenttext = (EditText) findViewById(R.id.content);
+        EditText contenttext = (EditText) findViewById(R.id.comment_content);
         this.content = contenttext.getText().toString();
-        intent.putExtra("author", this.author);
-        intent.putExtra("title", this.title);
-        intent.putExtra("content", this.content);
-        savePost();
+        intent.putExtra("comment_author", this.author);
+        intent.putExtra("comment_content", this.content);
+        intent.putExtra("id", this.post_id);
+        saveComment();
         startActivity(intent);
     }
 
-    public void savePost() {
+    public void saveComment() {
         RestAdapter adapter = new RestAdapter.Builder().setEndpoint("http://192.168.1.25/android_backend").setLogLevel(RestAdapter.LogLevel.FULL).build();
         ApiServiceInterface api = adapter.create(ApiServiceInterface.class);
-        api.savePost(this.content, this.author, this.title, new Callback<List<Empty>>() {
+        api.saveComment(this.content, this.author, this.post_id, new Callback<List<Empty>>() {
             @Override
             public void success(List<Empty> list, Response response) {
             }
@@ -57,12 +57,10 @@ public class PostFormActivity extends AppCompatActivity {
             public void failure(RetrofitError error) {
             }
         });
-
     }
 
     public void home(View view) {
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
     }
-
 }

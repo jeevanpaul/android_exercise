@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.jeevan.post_comments">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -25,7 +26,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.jeevan.post_comments.MainActivity" />
         </activity>
-        <activity android:name=".PostViewActivity"></activity>
+        <activity android:name=".PostViewActivity" />
+        <activity
+            android:name=".CommentFormActivity"
+            android:label="@string/title_activity_comment_form"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

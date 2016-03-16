@@ -1,17 +1,15 @@
 package com.example.jeevan.post_comments.model;
 
 /**
- * Created by jeevan on 3/14/16.
+ * Created by jeevan on 3/16/16.
  */
-public class Post {
+public class Comment {
     public String status;
-    public int id;
-    public String title;
-    public String content;
     public String author;
+    public String content;
 
     @Override
     public String toString() {
-        return this.title;
+        return this.content;
     }
 }
