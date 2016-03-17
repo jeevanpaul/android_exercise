@@ -30,27 +30,26 @@ public class PostFormActivity extends AppCompatActivity {
     }
 
     public void index(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
 
         EditText authortext = (EditText) findViewById(R.id.author);
-        this.author = authortext.getText().toString();
+        author = authortext.getText().toString();
         EditText titletext = (EditText) findViewById(R.id.title);
-        this.title = titletext.getText().toString();
+        title = titletext.getText().toString();
         EditText contenttext = (EditText) findViewById(R.id.content);
-        this.content = contenttext.getText().toString();
-        intent.putExtra("author", this.author);
-        intent.putExtra("title", this.title);
-        intent.putExtra("content", this.content);
+        content = contenttext.getText().toString();
         savePost();
-        startActivity(intent);
     }
 
     public void savePost() {
-        RestAdapter adapter = new RestAdapter.Builder().setEndpoint("http://192.168.1.25/android_backend").setLogLevel(RestAdapter.LogLevel.FULL).build();
+        RestAdapter adapter = new RestAdapter.Builder().setEndpoint("http://192.168.1.8/android_backend").setLogLevel(RestAdapter.LogLevel.FULL).build();
         ApiServiceInterface api = adapter.create(ApiServiceInterface.class);
-        api.savePost(this.content, this.author, this.title, new Callback<List<Empty>>() {
+        api.savePost(this.content, this.author, this.title, new Callback<Empty>() {
             @Override
-            public void success(List<Empty> list, Response response) {
+            public void success(Empty list, Response response) {
+                if(list.status.equals("SUCCESS")) {
+                    Intent intent = new Intent(PostFormActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
             }
 
             @Override

@@ -21,9 +21,11 @@ public interface ApiServiceInterface {
     @GET("/comment/index")
     void getComments(@Query("id")int id, Callback<List<Comment>> callback);
     @GET("/post/create")
-    void savePost(@Query("content")String content,@Query("author")String author,@Query("title")String title, Callback<List<Empty>> callback);
+    void savePost(@Query("content")String content,@Query("author")String author,@Query("title")String title, Callback<Empty> callback);
     @GET("/comment/create")
-    void saveComment(@Query("content")String content,@Query("author")String author,@Query("post_id")int post_id, Callback<List<Empty>> callback);
+    void saveComment(@Query("content")String content,@Query("author")String author,@Query("post_id")int post_id, Callback<Empty> callback);
     @GET("/post/show")
     void showPost(@Query("postid")int postid,Callback<Post> callback );
+    @GET("/comment/show")
+    void showComment(@Query("commentid")int commentid,Callback<Comment> callback );
 }

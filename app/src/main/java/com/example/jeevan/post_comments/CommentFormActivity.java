@@ -29,28 +29,28 @@ public class CommentFormActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_form);
         Intent intent = getIntent();
-        this.post_id = intent.getIntExtra("post_id", 0);
+        post_id = intent.getIntExtra("post_id", 0);
     }
     public void index(View view) {
-        Intent intent = new Intent(this, PostViewActivity.class);
 
         EditText authortext = (EditText) findViewById(R.id.comment_author);
-        this.author = authortext.getText().toString();
+        author = authortext.getText().toString();
         EditText contenttext = (EditText) findViewById(R.id.comment_content);
-        this.content = contenttext.getText().toString();
-        intent.putExtra("comment_author", this.author);
-        intent.putExtra("comment_content", this.content);
-        intent.putExtra("id", this.post_id);
+        content = contenttext.getText().toString();
         saveComment();
-        startActivity(intent);
     }
 
     public void saveComment() {
-        RestAdapter adapter = new RestAdapter.Builder().setEndpoint("http://192.168.1.25/android_backend").setLogLevel(RestAdapter.LogLevel.FULL).build();
+        RestAdapter adapter = new RestAdapter.Builder().setEndpoint("http://192.168.1.8/android_backend").setLogLevel(RestAdapter.LogLevel.FULL).build();
         ApiServiceInterface api = adapter.create(ApiServiceInterface.class);
-        api.saveComment(this.content, this.author, this.post_id, new Callback<List<Empty>>() {
+        api.saveComment(content,author,post_id, new Callback<Empty>() {
             @Override
-            public void success(List<Empty> list, Response response) {
+            public void success(Empty list, Response response) {
+                if(list.status.equals("SUCCESS")) {
+                    Intent intent = new Intent(CommentFormActivity.this, PostViewActivity.class);
+                    intent.putExtra("id",post_id);
+                    startActivity(intent);
+                }
             }
 
             @Override

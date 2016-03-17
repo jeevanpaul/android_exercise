@@ -1,9 +1,11 @@
 package com.example.jeevan.post_comments;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     }
 
     public void getPosts() {
-        RestAdapter adapter = new RestAdapter.Builder().setEndpoint("http://192.168.1.25/android_backend").setLogLevel(RestAdapter.LogLevel.FULL).build();
+        RestAdapter adapter = new RestAdapter.Builder().setEndpoint("http://192.168.1.8/android_backend").setLogLevel(RestAdapter.LogLevel.FULL).build();
         ApiServiceInterface api = adapter.create(ApiServiceInterface.class);
         api.getPosts(new Callback<List<Post>>() {
             @Override
@@ -82,5 +84,21 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         intent.putExtra("id", post.id);
         //Starting another activity to show post details
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_favorite:
+                // User chose the "Favorite" action, mark the current item
+                // as a favorite...
+
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -21,7 +21,8 @@
         android:id="@+id/comment_author"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Author"/>
+        android:hint="Author"
+        android:background="@drawable/comment_form"/>
     <EditText
         android:id="@+id/comment_content"
         android:layout_width="match_parent"

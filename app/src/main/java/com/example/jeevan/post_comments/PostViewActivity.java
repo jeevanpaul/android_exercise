@@ -1,11 +1,15 @@
 package com.example.jeevan.post_comments;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,7 +28,7 @@ import retrofit.client.Response;
 public class PostViewActivity extends AppCompatActivity {
     public int postid;
     Post post;
-    ListView listView;
+    public ListView listView;
     public List<Comment> comments;
 
     @Override
@@ -33,23 +37,29 @@ public class PostViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post_view);
         Intent intent = getIntent();
 
-        this.postid = intent.getIntExtra("id", 0);
+        postid = intent.getIntExtra("id", 0);
         getPostDetails();
-        getComments(this.postid);
     }
 
     public void getPostDetails() {
-        RestAdapter adapter = new RestAdapter.Builder().setEndpoint("http://192.168.1.25/android_backend").setLogLevel(RestAdapter.LogLevel.FULL).build();
+        RestAdapter adapter = new RestAdapter.Builder().setEndpoint("http://192.168.1.8/android_backend").setLogLevel(RestAdapter.LogLevel.FULL).build();
         ApiServiceInterface api = adapter.create(ApiServiceInterface.class);
-        api.showPost(this.postid, new Callback<Post>() {
+        api.showPost(postid, new Callback<Post>() {
             @Override
             public void success(Post list, Response response) {
-                    TextView textViewcontent = (TextView) findViewById(R.id.content);
-                    textViewcontent.setText(list.content);
-                    TextView textViewtitle = (TextView) findViewById(R.id.title);
-                    textViewtitle.setText(list.title);
-                    TextView textViewauthor = (TextView) findViewById(R.id.author);
-                    textViewauthor.setText(list.author);
+                TextView textViewcontent1 = (TextView) findViewById(R.id.contenttext);
+                textViewcontent1.setText("Content : ");
+                TextView textViewauthor1 = (TextView) findViewById(R.id.titletext);
+                textViewauthor1.setText("Title : ");
+                TextView textViewtitle1 = (TextView) findViewById(R.id.authortext);
+                textViewtitle1.setText("Author : ");
+                TextView textViewcontent = (TextView) findViewById(R.id.content);
+                textViewcontent.setText(list.content);
+                TextView textViewtitle = (TextView) findViewById(R.id.title);
+                textViewtitle.setText(list.title);
+                TextView textViewauthor = (TextView) findViewById(R.id.author);
+                textViewauthor.setText(list.author);
+                getComments(postid);
             }
 
             @Override
@@ -61,7 +71,7 @@ public class PostViewActivity extends AppCompatActivity {
     }
 
     public void getComments(int id) {
-        RestAdapter adapter = new RestAdapter.Builder().setEndpoint("http://192.168.1.25/android_backend").setLogLevel(RestAdapter.LogLevel.FULL).build();
+        RestAdapter adapter = new RestAdapter.Builder().setEndpoint("http://192.168.1.8/android_backend").setLogLevel(RestAdapter.LogLevel.FULL).build();
         ApiServiceInterface api = adapter.create(ApiServiceInterface.class);
         api.getComments(id, new Callback<List<Comment>>() {
             @Override
@@ -80,6 +90,18 @@ public class PostViewActivity extends AppCompatActivity {
 
     public void showList() {
         ArrayAdapter<Comment> adapter = new ArrayAdapter<Comment>(this, android.R.layout.simple_list_item_1, comments);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                Intent intent = new Intent(PostViewActivity.this, CommentViewActivity.class);
+                Comment comment = comments.get(position);
+                intent.putExtra("id", comment.id);
+                intent.putExtra("postid", postid);
+                startActivity(intent);
+            }
+        });
         listView.setAdapter(adapter);
     }
 
@@ -90,6 +112,27 @@ public class PostViewActivity extends AppCompatActivity {
     }
 
     public void home(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_favorite:
+                // User chose the "Favorite" action, mark the current item
+                // as a favorite...
+                home1();
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void home1() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

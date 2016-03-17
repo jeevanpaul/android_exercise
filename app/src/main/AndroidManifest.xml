@@ -30,7 +30,15 @@
         <activity
             android:name=".CommentFormActivity"
             android:label="@string/title_activity_comment_form"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".CommentViewActivity"
+            android:label="@string/title_activity_comment_form"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
     </application>
 
 </manifest>
