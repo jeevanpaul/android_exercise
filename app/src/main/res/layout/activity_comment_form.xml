@@ -1,37 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.jeevan.post_comments.CommentFormActivity"
-    tools:showIn="@layout/activity_comment_form">
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="home"
-        android:text="Home"/>
+    android:paddingTop="@dimen/activity_vertical_margin">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/commentform_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#37F297"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
     <EditText
         android:id="@+id/comment_author"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Author"
-        android:background="@drawable/comment_form"/>
+        android:inputType="textCapSentences"
+        android:maxLines="1"
+        android:singleLine="true" />
+
     <EditText
         android:id="@+id/comment_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Content"/>
+        android:hint="Content"
+        android:inputType="textCapSentences|textMultiLine"
+        android:lines="3" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit"
-        android:onClick="index"/>
+        android:onClick="index"
+        android:text="Submit" />
 
 </LinearLayout>
